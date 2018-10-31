@@ -15,7 +15,7 @@ from PyQt5.QtGui import QVector3D
 from pyqtgraph.opengl import GLViewWidget, GLScatterPlotItem
 import pyqtgraph.opengl as gl 
 from pyqtgraph import Transform3D
-from core.grabbermodel import GrabberElement
+from gripit.core.grabbermodel import GrabberElement
 import numpy as np
 import logging as log
 from enum import Enum

@@ -6,7 +6,7 @@ from future import standard_library
 standard_library.install_aliases()
 import cv2
 import numpy as np
-import edgelib.util as util
+import gripit.edgelib.util as util
 
 global window_size
 global buffer_zone

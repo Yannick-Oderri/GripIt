@@ -8,9 +8,9 @@ from future import standard_library
 standard_library.install_aliases()
 import cv2 as cv2
 import numpy as np
-import edgelib.util as util
-import edgelib.curv_disc as cd
-import edgelib.depth_disc as dd
+import gripit.edgelib.util as util
+import gripit.edgelib.curv_disc as cd
+import gripit.edgelib.depth_disc as dd
 import skimage
 import copy
 import random

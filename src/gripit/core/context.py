@@ -20,7 +20,7 @@ from .ros_image_model import ROSImageElement
 
 # local imports
 from .image_model import ImageElement
-import core.ynk_utils as util
+import gripit.core.ynk_utils as util
 
 # settings.py
 pg.setConfigOptions(imageAxisOrder='row-major')
@@ -48,7 +48,7 @@ class EdgeProcessingDetectContext(object):
         self.dataStorePath = dataStorePath
         dataStoreConfig = dataStorePath / "config.json"
         if not dataStoreConfig.is_file():
-            raise FileNotFoundError("'{}' does not contain a configuration file.".format(dataStorePath))
+            raise IOError("'{}' does not contain a configuration file.".format(dataStorePath))
 
         with open(str(dataStoreConfig)) as config_file:
             self.dataStoreConfig = json.load(config_file)

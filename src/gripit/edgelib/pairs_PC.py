@@ -9,10 +9,10 @@ from future import standard_library
 standard_library.install_aliases()
 import cv2
 import numpy as np
-import edgelib.util as util
+import gripit.edgelib.util as util
 import matplotlib as plt
 import copy
-from edgelib.crop_image import crop_image
+from gripit.edgelib.crop_image import crop_image
 
 
 if __name__ == '__main__':

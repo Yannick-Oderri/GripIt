@@ -9,8 +9,8 @@ from future import standard_library
 standard_library.install_aliases()
 import cv2
 import numpy as np
-import draw_img as di
-import edgelib.util as util
+import gripit.edgelib.draw_img as di
+import gripit.edgelib.util as util
 
 
 def roipoly(src, poly):

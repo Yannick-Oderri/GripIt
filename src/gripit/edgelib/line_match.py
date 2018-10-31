@@ -6,8 +6,8 @@ from __future__ import absolute_import
 from builtins import range
 from future import standard_library
 standard_library.install_aliases()
-from edgelib.relative_pos import relative_pos
-from edgelib.distance2d import distance2d
+from gripit.edgelib.relative_pos import relative_pos
+from gripit.edgelib.distance2d import distance2d
 import copy
 import random as rand
 import cv2

@@ -12,6 +12,7 @@ from builtins import int
 from builtins import str
 from future import standard_library
 standard_library.install_aliases()
+
 __author__ = 'Yannick Roberts'
 __license__ = 'MIT'
 __version__ = '1.1.20'
@@ -83,7 +84,7 @@ class App(QtGui.QWidget):
         global DATA_STORE
         args = app.arguments()
         #EXECUTION_MODE = ExecutionMode.DEVELOPMENT_ROS
-        #DATA_STORE = "ros"
+        DATA_STORE = "ros"
         #return
         for i in range(len(args)):
             if args[i] == "-n":                

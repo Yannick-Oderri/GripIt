@@ -10,18 +10,18 @@ import random
 import pdb
 from PyQt5.QtCore import QPointF as Point2D
 
-import core.config as config
-import edgelib.util as util
-import edgelib.Line_feat_contours as lfc
-import edgelib.classify_curves as cc
-import edgelib.label_curves as lc
-import edgelib.merge_lines as merge_lines
-from edgelib.line_seg import line_seg
-from edgelib.line_match import line_match
-from edgelib.edge_detect import edge_detect
-from edgelib.edge_detect import create_rgb_img
-import core.ynk_utils as helper
-from core.edge_model import EdgeModel, EdgePair
+import gripit.core.config as config
+import gripit.edgelib.util as util
+import gripit.edgelib.Line_feat_contours as lfc
+import gripit.edgelib.classify_curves as cc
+import gripit.edgelib.label_curves as lc
+import gripit.edgelib.merge_lines as merge_lines
+from gripit.edgelib.line_seg import line_seg
+from gripit.edgelib.line_match import line_match
+from gripit.edgelib.edge_detect import edge_detect
+from gripit.edgelib.edge_detect import create_rgb_img
+import gripit.core.ynk_utils as helper
+from gripit.core.edge_model import EdgeModel, EdgePair
 
 class CropMethod(Enum):
     USERCROP = 0

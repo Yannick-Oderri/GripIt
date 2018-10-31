@@ -33,8 +33,8 @@ from builtins import range
 from future import standard_library
 standard_library.install_aliases()
 import numpy as np
-from edgelib.maxlinedev import maxlinedev
-import edgelib.util as util
+from gripit.edgelib.maxlinedev import maxlinedev
+import gripit.edgelib.util as util
 
 def line_seg(edgelist, tol):
     num_contours = edgelist.shape[0]

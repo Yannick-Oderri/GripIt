@@ -9,9 +9,9 @@ from builtins import int
 from future import standard_library
 standard_library.install_aliases()
 from builtins import object
-from core.edge_model import EdgeAttributes, EdgeModel, EdgePair
-from core.point_cloud_model import PointCloudModel
-from core.point_cloud_render_element import SceneElement
+from gripit.core.edge_model import EdgeAttributes, EdgeModel, EdgePair
+from gripit.core.point_cloud_model import PointCloudModel
+from gripit.core.point_cloud_render_element import SceneElement
 import pyqtgraph.opengl as gl
 from PyQt5.QtCore import QPointF as Point2D
 from PyQt5.QtCore import QLineF
@@ -26,13 +26,13 @@ from mpl_toolkits.mplot3d import Axes3D
 import matplotlib.pyplot as plt
 import copy
 import logging as log
-import edgelib.util
+import gripit.edgelib.util
 import scipy
-from skimage.measure import LineModelND, ransac
-from edgelib.plane_model_nd import PlaneModelND
+from skimage.measure import LineModel, ransac
+from gripit.edgelib.plane_model_nd import PlaneModelND
 from scipy.spatial import distance
 import os
-import deps.pypcd.pypcd as pcd
+import gripit.deps.pypcd.pypcd as pcd
 
 
 def processFace(imageModel, edgePair):
