@@ -42,7 +42,7 @@ from gripit.gui.QLabelSlider import QLabelSlider
 # (fixme) add file loading if necessary
 
 IMAGE_NUM = 0
-EXECUTION_MODE = ExecutionMode.DEVELOPMENT
+EXECUTION_MODE = ExecutionMode.DEVELOPMENT_ROS
 DATA_STORE = "real"
 
 class App(QtGui.QWidget):
@@ -65,7 +65,7 @@ class App(QtGui.QWidget):
         self.initArg(app)
         self.initEdgeProcessorContext(app)
         self.initUI()
-        if self.imageSelectBox.count() == 0:
+        if self.imageSelectBox.count() == 0 and self.getContext().getMode() != ExecutionMode.DEVELOPMENT_ROS:
             log.warning("Image datastore is empty.")
             exit()
         # load selected image else load first image in list
@@ -100,6 +100,7 @@ class App(QtGui.QWidget):
                 EXECUTION_MODE = ExecutionMode.DEVELOPMENT_ROS
                 DATA_STORE = "ros"
 
+        
 
     def initUI(self):
         """Initialize Program UI

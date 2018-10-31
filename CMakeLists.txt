@@ -108,6 +108,7 @@ catkin_package(
     python-numpy 
     python-skimage
     python-lzf
+    pyqt5-dev-tools
     rospy
 #  DEPENDS system_lib
 )

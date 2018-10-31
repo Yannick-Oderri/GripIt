@@ -42,13 +42,14 @@ class ExecutionMode(Enum):
 
 class EdgeProcessingDetectContext(object):
 
-    def __init__(self, dataStorePath, _mode=ExecutionMode.DEVELOPMENT):  # (fixme) setup mode switching
+    def __init__(self, dataStorePath, _mode):  # (fixme) setup mode switching
         log.basicConfig(level=log.NOTSET)
         self.__mode = _mode
         self.dataStorePath = dataStorePath
         dataStoreConfig = dataStorePath / "config.json"
+        cwd = os.getcwd()
         if not dataStoreConfig.is_file():
-            raise IOError("'{}' does not contain a configuration file.".format(dataStorePath))
+            raise IOError("'{}' does not contain a configuration file.".format(cwd))
 
         with open(str(dataStoreConfig)) as config_file:
             self.dataStoreConfig = json.load(config_file)
@@ -343,7 +344,7 @@ class EdgeProcessingDetectContext(object):
         return self.__mode
 
     @staticmethod
-    def initializeContext(dataStore="blender", _mode=ExecutionMode.DEVELOPMENT):
+    def initializeContext(dataStore, _mode):
         """
         Description:
             Initialize the program context which hold global information about running process
@@ -352,6 +353,7 @@ class EdgeProcessingDetectContext(object):
             _mode: staging mode to run code
         """
         dataStorePath = Path("./data/{}/".format(dataStore))
+        log.warn(_mode)
         try:
 
             if not dataStorePath.is_dir():
@@ -369,10 +371,12 @@ class EdgeProcessingDetectContext(object):
     def getContext():
         """ Returns application context        
         """
+
         try:
             __CONTEXT
         except NameError:            
-            return EdgeProcessingDetectContext.initializeContext()
+            #return EdgeProcessingDetectContext.initializeContext()
+            raise NameError("not available.")
         else:
             return __CONTEXT
 
