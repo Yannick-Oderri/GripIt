@@ -25,9 +25,9 @@ Currently, GripIt must be launched from a terminal and depends on application ar
 
 Arguments:
 
-- -m \&lt;database[blend,real]\&gt;
+- -m database[blend,real]
   - Selects a database where a set of scenes are stored. The &quot;Blend,&quot; stores synthetic data produced by blender while &quot;Real&quot; hosts an array of real images.
-- -n \&lt;imageNumber\&gt;
+- -n imageNumber
   - Scenes stored in the database are selected by their numeric index.
 
 For instance, to load the second scene from the database, &quot;real&quot;, the following commands must be used.
@@ -35,7 +35,10 @@ For instance, to load the second scene from the database, &quot;real&quot;, the 
         $/ Python ./application.py -m real  -n 2
 
 Scene Parameters:
+
 ![image](https://user-images.githubusercontent.com/847804/47836606-63380180-dd7f-11e8-88ac-6b650e2bd20c.png)
+
+
 GripIt incorporates a set of parameters which may be used to alter the edge detection and point-cloud representation of the scene.
 
         Parameters:
