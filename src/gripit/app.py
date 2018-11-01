@@ -65,7 +65,7 @@ class App(QtGui.QWidget):
         self.initArg(app)
         self.initEdgeProcessorContext(app)
         self.initUI()
-        if self.imageSelectBox.count() == 0 and self.getContext().getMode() != ExecutionMode.DEVELOPMENT_ROS:
+        if (self.imageSelectBox.count() == 0) and (self.getContext().getMode() != ExecutionMode.DEVELOPMENT_ROS):
             log.warning("Image datastore is empty.")
             exit()
         # load selected image else load first image in list
@@ -154,9 +154,12 @@ class App(QtGui.QWidget):
         imageDescriptors = self.edgeProcessorContext.listAvailableImages()
         comboBox = QtWdgt.QComboBox()
         for descriptor in imageDescriptors:
-            comboBox.addItem(descriptor[0], descriptor[1])            
+            # do not add depth map to color listings
+            if ("depth" in descriptor[0]) and (self.getContext().getMode() == ExecutionMode.DEVELOPMENT_ROS):
+                continue
+            comboBox.addItem(descriptor[0], descriptor[1])     
         def _imageSelectedEvent(val): # Image has been selected
-            index = self.imageSelectBox.itemData(val)
+            index = self.imageSelectBox.itemData(val)   
             self.loadImageFile(index)
         comboBox.currentIndexChanged.connect(_imageSelectedEvent)
 
@@ -165,8 +168,22 @@ class App(QtGui.QWidget):
         qtComponentWrapper.setLayout(qtComponentLayout)
         qtComponentLayout.addWidget(comboBox, 0, 0, 1, 2)
 
+        # # If ROS, add depth option        
+        if (self.getContext().getMode() == ExecutionMode.DEVELOPMENT_ROS):
+            dcomboBox = QtWdgt.QComboBox()
+            self.dImageSelectBox = dcomboBox
+            for descriptor in imageDescriptors:
+                if "depth" in descriptor[0]:
+                    dcomboBox.addItem(descriptor[0], descriptor[1])
+
+            #def _imageSelectedEvent(val): # Image has been selected
+            #    index = self.imageSelectBox.itemData(val)
+            #    self.loadImageFile(index)
+            #dcomboBox.currentIndexChanged.connect(_imageSelectedEvent)
+            qtComponentLayout.addWidget(dcomboBox, 1, 0, 1, 2)
+
         saveButton = QtGui.QPushButton("Save")
-        qtComponentLayout.addWidget(saveButton, 1, 0, 1, 1)
+        qtComponentLayout.addWidget(saveButton, 2, 0, 1, 1)
         def _saveImageParamsEvent(val):
             self.storeImageParameters(self.currentImageModel)
         saveButton.clicked.connect(_saveImageParamsEvent)
@@ -175,12 +192,12 @@ class App(QtGui.QWidget):
         def _resetImageParamsEvent(val):
             self.resetImageParameters(self.currentImageModel)
         resetButton.clicked.connect(_resetImageParamsEvent)
-        qtComponentLayout.addWidget(resetButton, 1, 1, 1, 1)
+        qtComponentLayout.addWidget(resetButton, 2, 1, 1, 1)
 
         # Add process button
         self.processImgBtn = QtGui.QPushButton("Process")
         self.processImgBtn.clicked.connect(self.processImage)
-        qtComponentLayout.addWidget(self.processImgBtn, 2, 0, 1, 2)
+        qtComponentLayout.addWidget(self.processImgBtn, 3, 0, 1, 2)
 
         return qtComponentWrapper, comboBox
 
@@ -192,14 +209,21 @@ class App(QtGui.QWidget):
             _mode=EXECUTION_MODE)
 
     # event which loads ImageModel
-    def loadImageFile(self, imageNumber):
+    def loadImageFile(self, imageNumber):        
         # remove all sidebar parameters except imageselect
         self.clearLayout(self.sideBarLayout)
-        self.currentImageModel = self.edgeProcessorContext.loadImage(imageNumber)
+
+        #get image numbers
+        imageId = self.imageSelectBox.currentText()
+        if self.getContext().getMode() == ExecutionMode.DEVELOPMENT_ROS:
+            dimgId = self.dImageSelectBox.currentText()
+            imageId = (imageId, dimgId)
+
+        self.currentImageModel = self.edgeProcessorContext.loadImage(imageId)
         self.initSidebarAttrbutes(self.currentImageModel, self.sideBarLayout)
         
         if self.edgeProcessorContext.getMode() == ExecutionMode.DEVELOPMENT_ROS:
-            self.displayROSImage(self.currentImageModel, imageNumber)    
+            self.displayROSImage(self.currentImageModel, 0)   # select rgb as default image 
         else:
             self.displayImage()
 

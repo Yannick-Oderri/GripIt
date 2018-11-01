@@ -181,7 +181,7 @@ def fitLinetoEdgeModel(imageModel, edgeModel):
     direction = None
 
     try:
-        model_robust, inliers = ransac(pointList, LineModelND, min_samples=2,
+        model_robust, inliers = ransac(pointList, LineModel, min_samples=2,
                                residual_threshold=1, max_trials=1000)
         origin, direction = model_robust.params
 
@@ -189,7 +189,7 @@ def fitLinetoEdgeModel(imageModel, edgeModel):
     except ValueError as err:
         log.warn("Exception Thrown for model robust again!!!")
         direction = None
-
+    
     pointList = edgeModel.getEdgePointCloudIndexes()
     startPoint = getKNearestPoint(pointList[0:sampleNumber], imageModel.getPointCloudFromCrop())
     endPoint = getKNearestPoint(pointList[-1*sampleNumber:-1], imageModel.getPointCloudFromCrop())
@@ -197,7 +197,7 @@ def fitLinetoEdgeModel(imageModel, edgeModel):
     endPoint = imageModel.getPointCloudFromCrop().getPointfromXYCoordinate(endPoint[0], endPoint[1])
 
     dst = distance.euclidean(startPoint,endPoint)
-    if direction is None:
+    if direction is not None:
         if np.dot(endPoint - startPoint, direction) < 0:
             direction = direction * -1
 

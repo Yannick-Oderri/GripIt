@@ -57,26 +57,6 @@ class EdgeProcessingDetectContext(object):
 
         if self.__mode == ExecutionMode.DEVELOPMENT_BLENDER:
             pass
-        #     self.depthImgPath = "./img/blender/depth/"
-        #     self.rgbImgPath = "./img/blender/color/"
-        #     self.modelPath = "./assets/models/"
-        #     self.outPath = "./outFile/"
-        #     self.rgbNamePrefix = "Image{}"
-        #     self.depthNamePrefix = "Image{}"
-        #     self.imgExt = "png"
-        #     self.modelExt = "obj"
-        #     self.__mode = ExecutionMode.DEVELOPMENT_1
-        #     self.focal_length = 1700 # TODO this need to be modified
-        #     self.thresh = 20
-        #     self.window_size = 10
-        #     self.min_len = 20
-        #     self.min_dist = 10
-        #     self.max_dist = 200
-        #     self.delta_angle = 80
-        #     self.camera_pitch = 60
-        #     self.camera_translate_x = 0
-        #     self.camera_translate_y = 0
-        #     self.camera_translate_z = 50
         else: # else default mode
             self.modelPath = "./GripIt/resources/models/"
             self.outPath = "./outFile/"
@@ -96,31 +76,6 @@ class EdgeProcessingDetectContext(object):
             self.camera_translate_x = 0
             self.camera_translate_y = 0
             self.camera_translate_z = 50
-
-        # Process what to display in opencv application. DEPRECATED
-        if self.__mode == ExecutionMode.DEVELOPMENT_1:
-            self.ModeType = ExecutionMode.DEVELOPMENT
-
-            # Declare display constraints
-            self.ShowPointCloudWnd = True
-            self.ShowContourPairs = False
-            self.ShowLinePairsWnd = True
-            self.ShowEdgeListWnd = False
-            self.ShowLabeledCurves = True
-            self.ShowMergedContours = True
-            self.ShowDiscontinuityCurvature = False
-
-        elif self.__mode == ExecutionMode.DEVELOPMENT_2:
-            self.ModeType = ExecutionMode.DEVELOPMENT
-
-            # Declare display ocnstraints
-            self.ShowPointCloudWnd = False
-            self.ShowContourPairs = True
-            self.ShowAllPairsWnd = False
-            self.ShowLabeledCurves = False
-            self.ShowMergedContours = False
-            self.ShowDiscontinuityCurvature = False
-            self.ShowContourPairs = False
 
     def getColorImageConfig(self):
         return self.dataStoreConfig["colorImage"]
@@ -160,15 +115,25 @@ class EdgeProcessingDetectContext(object):
         results.sort()
         return results
 
-    
+    # Finds avaialble images to be presented on image drop-down
     def listAvailableROSImages(self):
-        print("ROS images")
-        images = [self.getRGBImagePath()/"image_color", self.getDepthImagePath() / "image_raw"]
+        targetMessages = ("sensor_msgs/CompressedImage", 
+                            "sensor_msgs/Image",
+                            "sensor_msgs/compressed")
+
+        # get image topics
+        topics = rospy.get_published_topics()
+        images = []
+        for topic in topics:
+            for trgtMsg in targetMessages:
+                if trgtMsg == topic[1]:
+                    images.append(topic[0])
+
         index = 0
         results = []
         for image in images:
-            name = Path(image).stem            
-            results.append((name, index))
+            # name = Path(image).stem            
+            results.append((image, index))
             index = index + 1
         results.sort()
         return results
@@ -178,7 +143,7 @@ class EdgeProcessingDetectContext(object):
 
     def loadImage(self, index):
         if self.__mode == ExecutionMode.DEVELOPMENT_ROS:
-            return self.loadROSImage("image_color", "image_raw")
+            return self.loadROSImage(index[0], index[1])
         else:
             return self.loadLocalImage(index)
 
@@ -218,13 +183,13 @@ class EdgeProcessingDetectContext(object):
 
     def loadROSImage(self, rgbName, depthName):
         colorImgConfig = self.getColorImageConfig()
-        rgb_img_path = self.getRGBImagePath() / rgbName
+        rgb_img_path = rgbName
         log.info("Connecting to ROS topic: {}".format(rgb_img_path))
 
         rgbImage = ROSImage(rgb_img_path, 0)
         rgbImage.subscribe()
         
-        depth_img_path = self.getDepthImagePath() / depthName
+        depth_img_path = depthName
         log.info("Connecting to ROS topic: {}".format(depth_img_path))
         
         depth_img = ROSImage(depth_img_path, 1)
