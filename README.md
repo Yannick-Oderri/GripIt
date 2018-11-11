@@ -4,11 +4,11 @@ Application Name: GripIt
 
 Provided the depth map of an arbitrary scene, GripIt can extract the geometric edges of objects in said scene and further calculate the optimal approach vector for a 2-finger pinch-based robotic grippers. This information is presented in an interactive 3D point cloud view. Furthermore, GripIt provides editable parameters which governs particular features of the 2D and 3D scene. As a high-level overview, GripIt relies on machine vision algorithms to define the edges within a depth map. These edges are then paired and a normal vector calculated based on the underlying surface&#39;s depth map representation.
 
-*Instruction*
+**Instruction**
 
 **Application Dependencies.**
 
-GritIp had been tested on ROS kinectic and relies on the following packages. Such packages are installed during the catkin_make process and, therefore, does not require manual installation. Ensure the packages are installed successfully using the ros_dep command.
+Currently, GripIt was built using Anaconda&#39;s build environment. GritIp also relies on the following packages:
 
 -
   - OpenCV3                3.1.0
@@ -19,20 +19,20 @@ GritIp had been tested on ROS kinectic and relies on the following packages. Suc
   - Scipy                        0.19.1
   - Scikit-image                0.13.0
 
-**Installation.**
+**Launching GripIt:**
 
-Clone this repository to a Catkin workspace and execute catkin_make.m:
+Currently, GripIt must be launched from a terminal and depends on application arguments to load a scene.
 
-$/ cd %catkin-ws%/src
-$/ git clone https://github.com/yannick-oderri/gripit
-$/ cd .. && catkin_make
+Arguments:
 
-**Launching GripIt**
-GripIt can be launched using the following command. Ensure ROScore had been executed and a suitable depth and color image topics are opened.
+- -m database[blend,real]
+  - Selects a database where a set of scenes are stored. The &quot;Blend,&quot; stores synthetic data produced by blender while &quot;Real&quot; hosts an array of real images.
+- -n imageNumber
+  - Scenes stored in the database are selected by their numeric index.
 
-$/ rosrun gripit gripit
+For instance, to load the second scene from the database, &quot;real&quot;, the following commands must be used.
 
-
+        $/ Python ./application.py -m real  -n 2
 
 Scene Parameters:
 
