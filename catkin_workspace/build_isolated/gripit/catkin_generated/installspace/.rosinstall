@@ -1,0 +1,2 @@
+- setup-file:
+    local-name: /tmp/catkin_workspace/install_isolated/setup.sh

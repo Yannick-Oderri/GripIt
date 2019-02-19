@@ -1,0 +1,6 @@
+set(gripit_SETUP_PY_VERSION "0.0.1")
+set(gripit_SETUP_PY_SCRIPTS "")
+set(gripit_SETUP_PY_PACKAGES "gripit")
+set(gripit_SETUP_PY_PACKAGE_DIRS "src/gripit")
+set(gripit_SETUP_PY_MODULES "")
+set(gripit_SETUP_PY_MODULE_DIRS "")

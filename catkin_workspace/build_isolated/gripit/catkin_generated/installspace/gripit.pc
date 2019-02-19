@@ -1,0 +1,8 @@
+prefix=/tmp/catkin_workspace/install_isolated
+
+Name: gripit
+Description: Description of gripit
+Version: 0.0.1
+Cflags: 
+Libs: -L/tmp/catkin_workspace/install_isolated/lib -lgripit
+Requires: python-numpy python-skimage pyqt5-dev-tools rospy
