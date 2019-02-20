@@ -1,1 +1,0 @@
-/usr/bin/c++  -fPIC   -shared -Wl,-soname,libgtest.so -o libgtest.so CMakeFiles/gtest.dir/src/gtest-all.cc.o  -L/tmp/catkin_workspace/build_isolated/gripit/gtest/gtest/src -lpthread -Wl,-rpath,/tmp/catkin_workspace/build_isolated/gripit/gtest/gtest/src 

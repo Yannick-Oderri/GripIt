@@ -1,2 +1,0 @@
-gripit
--DCATKIN_SKIP_TESTING=1 -G Unix Makefiles -DCATKIN_DEVEL_PREFIX=/tmp/catkin_workspace/devel_isolated -DCMAKE_INSTALL_PREFIX=/tmp/catkin_workspace/install_isolated
